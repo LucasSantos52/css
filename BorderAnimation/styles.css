@@ -6,7 +6,7 @@
     --vh: 1vh;
 }
 
-/* atributo experimental - ajuda a alternar o valor da animação */
+/* the way we can use variables in browser using css */
 @property --angle {
     syntax: "<angle>";
     initial-value: 0deg;
@@ -17,31 +17,33 @@ body {
     background: #222;
     color: #eee;
     margin: 0;
+    /* vh defined by js - auto ajust the height to 100% of any device */
     height: calc(var(--vh, 1vh) * 100);
-    /* altura total da tela */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* Card default */
 .card {
     margin: 0 auto;
     padding: 2em;
     width: 300px;
-    background: #1c1f2b;
+    background: #1c1c1c;
     text-align: center;
     border-radius: 10px;
     position: relative;
 }
 
-.card::after,
-.card::before {
+/* #region multi */
+
+.card-milti::after,
+.card-multi::before {
     content: '';
     position: absolute;
     height: 100%;
     width: 100%;
-    /* background-image: conic-gradient(from var(--angle), transparent 80%, green); */
-    background-image: conic-gradient(from var(--angle), red, green, blue, red);    
+    background-image: conic-gradient(from var(--angle), red, green, blue, red);
     top: 50%;
     left: 50%;
     translate: -50% -50%;
@@ -51,10 +53,11 @@ body {
     animation: 3s spin linear infinite;
 }
 
-.card::before {
-    filter: blur(1.5rem);
-    opacity: 0.5;
+.card-multi::before {
+    filter: blur(.5rem);
+    opacity: .5;
 }
+
 
 @keyframes spin {
     from {
@@ -65,3 +68,79 @@ body {
         --angle: 360deg;
     }
 }
+
+/* #endregion */
+
+/* #region single */
+
+.card-single::after,
+.card-single::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: conic-gradient(from var(--angle), transparent 80%, green);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 3px;
+    border-radius: 10px;
+    animation: 3s spin-single-clockwise linear infinite;
+}
+
+@keyframes spin-single-clockwise {
+    from {
+        --angle: 0deg;
+    }
+
+    to {
+        --angle: 360deg;
+    }
+}
+
+/* #endregion */
+
+/* #region dual */
+
+.card-dual::after,
+.card-dual::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: conic-gradient(from var(--angle), transparent 80%, green);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 3px;
+    border-radius: 10px;
+    animation: 3s spin-dual-clockwise linear infinite;
+}
+
+.card-dual::before {
+    animation: 3s spin-dual-clockwise180 linear infinite;
+}
+
+@keyframes spin-dual-clockwise {
+    from {
+        --angle: 0deg;
+    }
+
+    to {
+        --angle: 360deg;
+    }
+}
+
+@keyframes spin-dual-clockwise180 {
+    from {
+        --angle: -180deg;
+    }
+
+    to {
+        --angle: 180deg;
+    }
+}
+
+/* #endregion */
